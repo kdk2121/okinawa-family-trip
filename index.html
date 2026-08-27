@@ -307,6 +307,44 @@
   }
   .callout b { color: var(--coral); }
 
+  /* ---- Typhoon section ---- */
+  .typhoon { margin: 22px 0; }
+  .ty-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .ty-status {
+    display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px;
+    margin: 0 0 4px;
+  }
+  .ty-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--ink-faint); }
+  .ty-dot.calm { background: #2F9E6B; }
+  .ty-dot.watch { background: var(--gold); }
+  .ty-dot.warn { background: var(--coral); }
+  .ty-sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 12px; }
+  .ty-wind { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 12px 0; }
+  .ty-wind .d {
+    text-align: center; padding: 8px 4px; border-radius: 9px;
+    background: var(--card-tint); border: 1px solid var(--line-teal); font-size: 12px;
+  }
+  .ty-wind .d.hi { background: var(--coral-soft); border-color: var(--coral); }
+  .ty-wind .d .dd { font-weight: 700; color: var(--ink); }
+  .ty-wind .d .gg { font-size: 15px; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .ty-wind .d .lbl { font-size: 10px; color: var(--ink-faint); }
+  .ty-wind .d.hi .gg { color: var(--coral); }
+  .ty-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .ty-links a {
+    display: inline-flex; align-items: center; gap: 5px; text-decoration: none;
+    font-size: 12.5px; font-weight: 700; color: var(--teal-deep);
+    background: var(--card-tint); border: 1px solid var(--line-teal);
+    padding: 6px 12px; border-radius: 999px;
+  }
+  @media (hover:hover){ .ty-links a:hover { background: var(--line-teal); } }
+  .ty-jma { font-size: 13px; color: var(--ink); margin: 10px 0 0; padding: 10px 12px;
+    background: var(--card-tint); border-radius: 9px; border: 1px solid var(--line-teal); display: none; }
+  .ty-jma.show { display: block; }
+  .ty-jma b { color: var(--coral); }
+
   footer {
     margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line);
     font-size: 12px; color: var(--ink-faint); line-height: 1.7;
@@ -439,8 +477,7 @@
         <div class="time">점심</div>
         <div class="what"><p class="title">공항에서 점심 (합류 겸)</p><p class="desc">부산팀이 먼저 와 있으니, 인천팀 합류하며 공항 4층에서 다같이</p>
           <div class="meta">
-            <span class="badge food"><span class="ic">🍴</span><span><b>로얄호스트 나하공항점</b> (국내선 터미널 4F 패밀리레스토랑) <span class="note">아빠·엄마 2인은 카드 라운지 혜택으로 · 카드 무료식사 조건은 카드사 확인</span></span></span>
-            <span class="badge park"><span class="ic">🍽️</span><span>나머지 인원은 공항 4F 식당가에서 간단히 · 첫날은 무리 금지</span></span>
+            <span class="badge food"><span class="ic">🍴</span><span><b>로얄호스트 나하공항점에 다같이</b> (국내선 터미널 4F 패밀리레스토랑) <span class="note">아빠·엄마 카드 혜택으로 <b>2인분 무료</b> + 나머지 인원 주문해서 함께 식사 · 첫날은 무리 금지</span></span></span>
           </div>
         </div>
       </div>
@@ -792,6 +829,22 @@
     </li>
   </ul>
 
+  <h2 class="section-title">🌀 태풍 상황</h2>
+  <p class="section-sub">9월 오키나와는 태풍 정점 · 여행 중 실시간으로 여기서 확인하세요</p>
+  <div class="typhoon">
+    <div class="ty-card">
+      <p class="ty-status"><span class="ty-dot" id="tyDot"></span><span id="tyStatus">태풍 상황 확인 중…</span></p>
+      <p class="ty-sub" id="tySub">여행 5일간 최대 돌풍(강풍)으로 태풍 접근을 가늠합니다. 돌풍 100km/h↑면 항공 지연·명소 휴장 가능.</p>
+      <div class="ty-wind" id="tyWind"></div>
+      <div class="ty-jma" id="tyJma"></div>
+      <div class="ty-links">
+        <a href="https://www.jma.go.jp/bosai/map.html#5/26.5/128/&elem=root&typhoon=all&contents=typhoon" target="_blank" rel="noopener">🌀 일본 기상청 태풍맵</a>
+        <a href="https://www.windy.com/-Waves-waves?waves,26.212,127.679,7" target="_blank" rel="noopener">🌊 Windy 경로·바람</a>
+        <a href="https://www.weather.go.kr/w/typhoon/typ-status.do" target="_blank" rel="noopener">🇰🇷 한국 기상청 태풍</a>
+      </div>
+    </div>
+  </div>
+
   <div class="callout" style="background:var(--card-tint); border-color:var(--line-teal);">
     <b style="color:var(--teal-deep);">🌡️ 9월 오키나와</b> — 여전히 덥고 습함(30도↑) + 태풍 시즌. 실내 명소(수족관)를 <b>비 오는 날 예비 코스</b>로 두면 유연합니다. 츄라우미 폐장 시간은 방문 주 <b>공식 홈페이지에서 최종 확인</b>.
   </div>
@@ -892,6 +945,73 @@
         });
       }).catch(function () { /* 네트워크 실패 시 조용히 숨김 */ });
     });
+  })();
+
+  /* ---- Typhoon watch: Open-Meteo 강풍 + JMA 특보 ---- */
+  (function () {
+    var TRIP = ['2026-09-10','2026-09-11','2026-09-12','2026-09-13','2026-09-14'];
+    var DOW = ['목','금','토','일','월'];
+    var wrap = document.getElementById('tyWind');
+    var dot = document.getElementById('tyDot');
+    var st = document.getElementById('tyStatus');
+    var sub = document.getElementById('tySub');
+    if (!wrap || !('fetch' in window)) return;
+
+    // 1) 여행 5일간 최대 돌풍 (나하 기준)
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=26.4&longitude=127.8' +
+      '&daily=wind_gusts_10m_max,wind_speed_10m_max,precipitation_probability_max' +
+      '&timezone=Asia%2FTokyo&forecast_days=16';
+    fetch(url).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (!j || !j.daily) { st.textContent = '태풍 데이터를 불러오지 못했어요 (아래 링크로 확인)'; dot.className='ty-dot'; return; }
+      var d = j.daily, map = {};
+      d.time.forEach(function (t, i) { map[t] = i; });
+      var maxGust = 0, anyData = false;
+      var html = '';
+      TRIP.forEach(function (t, k) {
+        var i = map[t];
+        if (i == null) {
+          html += '<div class="d"><div class="dd">D'+(k+1)+'·'+DOW[k]+'</div><div class="gg" style="color:var(--ink-faint)">–</div><div class="lbl">예보 대기</div></div>';
+          return;
+        }
+        anyData = true;
+        var g = Math.round(d.wind_gusts_10m_max[i]);
+        if (g > maxGust) maxGust = g;
+        var hi = g >= 90;
+        html += '<div class="d'+(hi?' hi':'')+'"><div class="dd">D'+(k+1)+'·'+DOW[k]+'</div><div class="gg">'+g+'</div><div class="lbl">돌풍 km/h</div></div>';
+      });
+      wrap.innerHTML = html;
+
+      if (!anyData) {
+        dot.className = 'ty-dot'; st.textContent = '아직 예보 범위 밖 — 여행 약 2주 전부터 표시';
+        sub.textContent = '지금은 태풍 예측 범위 밖입니다. 여행이 가까워지면 5일간 돌풍이 자동으로 채워지고, 지금도 아래 링크로 현재 태풍은 볼 수 있어요.';
+      } else if (maxGust >= 90) {
+        dot.className = 'ty-dot warn';
+        st.innerHTML = '⚠️ 강풍 주의 — 최대 돌풍 ' + maxGust + ' km/h';
+        sub.textContent = '태풍 영향 가능 구간입니다. 항공 지연·명소 휴장 대비하고, 아래 태풍맵에서 경로를 꼭 확인하세요.';
+      } else if (maxGust >= 60) {
+        dot.className = 'ty-dot watch';
+        st.innerHTML = '🌬️ 바람 다소 강함 — 최대 돌풍 ' + maxGust + ' km/h';
+        sub.textContent = '태풍급은 아니지만 바닷가·전망대는 바람이 셀 수 있어요. 배편·글라스보트 운항 확인 권장.';
+      } else {
+        dot.className = 'ty-dot calm';
+        st.innerHTML = '✅ 현재 예보상 태풍 영향 낮음 — 최대 돌풍 ' + maxGust + ' km/h';
+        sub.textContent = '여행 5일간 바람은 대체로 잔잔한 편입니다. 그래도 태풍은 급변하니 출발 3~5일 전 재확인하세요.';
+      }
+    }).catch(function () { st.textContent = '태풍 데이터 로드 실패 (아래 링크로 확인)'; dot.className='ty-dot'; });
+
+    // 2) JMA 오키나와 본섬 기상특보 헤드라인 (있으면 표시)
+    fetch('https://www.jma.go.jp/bosai/warning/data/warning/471000.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j) return;
+        var box = document.getElementById('tyJma');
+        var head = j.headlineText;
+        var dt = j.reportDatetime ? j.reportDatetime.slice(0,10) : '';
+        if (head && head.trim()) {
+          box.innerHTML = '<b>일본 기상청 특보(오키나와, '+dt+')</b><br>' + head;
+          box.classList.add('show');
+        }
+      }).catch(function () { /* JMA CORS 막히면 조용히 skip */ });
   })();
 </script>
 

@@ -605,7 +605,7 @@
       <g class="mp-marker"><ellipse cx="153.5" cy="701.1" rx="9.1" ry="3" fill="rgba(60,20,10,0.18)"/><path d="M153.5 702.1 C 140.5 684.7, 140.5 676.9, 153.5 669.1 C 166.5 676.9, 166.5 684.7, 153.5 702.1 Z" fill="#D64A3F" stroke="#fff" stroke-width="2"/><circle cx="153.5" cy="681.45" r="7.54" fill="rgba(255,255,255,0.92)"/><text x="153.5" y="686.26" text-anchor="middle" font-size="11.7" font-weight="700" fill="#D64A3F" font-family="Zilla Slab,serif">6</text></g>
       <text class="mp-label" x="172" y="710" text-anchor="start">슈리성</text>
       <g class="mp-marker"><ellipse cx="123.5" cy="704.7" rx="9.1" ry="3" fill="rgba(60,20,10,0.18)"/><path d="M123.5 705.7 C 110.5 688.3, 110.5 680.5, 123.5 672.7 C 136.5 680.5, 136.5 688.3, 123.5 705.7 Z" fill="#7C4DFF" stroke="#fff" stroke-width="2"/><circle cx="123.5" cy="685.05" r="7.54" fill="rgba(255,255,255,0.92)"/><text x="123.5" y="689.86" text-anchor="middle" font-size="11.7" font-weight="700" fill="#7C4DFF" font-family="Zilla Slab,serif">7</text></g>
-      <text class="mp-label" x="118" y="740" text-anchor="middle">리가로얄 1박</text>
+      <text class="mp-label" x="165" y="742" text-anchor="start">리가로얄 1박</text>
       <circle cx="256.4" cy="428.7" r="6" fill="#E8A72C" stroke="#fff" stroke-width="1.5"/>
       <text class="mp-label sm" x="272" y="452" text-anchor="start">온나노에키</text>
       <circle cx="347.3" cy="344.8" r="6" fill="#E8A72C" stroke="#fff" stroke-width="1.5"/>
@@ -1375,109 +1375,67 @@
     var hint=document.getElementById('mapHint');
     var reset=document.getElementById('mapReset');
     if(!wrap||!vp||!svg) return;
-    var W=700, H=900;                 // 원본 viewBox
-    var MIN=1, MAX=5;
-    var scale=1, cx=W/2, cy=H/2;      // 현재 배율 + 뷰 중심(원본좌표)
+    var MIN=1, MAX=4;
+    var scale=1, tx=0, ty=0;
 
-    // 핀/라벨 크기를 줌에 반비례해 역보정 (지도앱처럼 일정 크기)
-    var pinEls=[];
-    svg.querySelectorAll('.mp-pin circle, .mp-seq circle, .mp-extra circle').forEach(function(c){
-      pinEls.push({el:c, base:parseFloat(c.getAttribute('r'))});
+    // 마커/라벨: 확대해도 일정 크기 유지 (각 요소를 앵커 기준 역스케일)
+    var keep=[];
+    svg.querySelectorAll('.mp-marker, .mp-label, .mp-extra > g > text, .mp-extra > g > circle').forEach(function(el){
+      // 앵커 좌표 구하기
+      var ax, ay;
+      if(el.classList.contains('mp-marker')){
+        var c=el.querySelector('circle'); ax=parseFloat(c.getAttribute('cx')); ay=parseFloat(c.getAttribute('cy'));
+      } else if(el.tagName==='text'){ ax=parseFloat(el.getAttribute('x')); ay=parseFloat(el.getAttribute('y')); }
+      else if(el.tagName==='circle'){ ax=parseFloat(el.getAttribute('cx')); ay=parseFloat(el.getAttribute('cy')); }
+      if(isFinite(ax)&&isFinite(ay)) keep.push({el:el, ax:ax, ay:ay});
     });
-    var seqStroke=[];
-    svg.querySelectorAll('.mp-seq circle').forEach(function(c){ seqStroke.push({el:c, base:parseFloat(getComputedStyle(c).strokeWidth)||3}); });
-    var textEls=[];
-    svg.querySelectorAll('.mp-pin text, .mp-extra text, .mp-seq text').forEach(function(t){
-      var fs=parseFloat(getComputedStyle(t).fontSize)||12;
-      textEls.push({el:t, base:fs});
-    });
-    var arrowEls=[];
-    svg.querySelectorAll('.mp-arrow').forEach(function(a){ arrowEls.push(a); });
 
     function apply(){
-      var vw=W/scale, vh=H/scale;
-      var x=cx-vw/2, y=cy-vh/2;
-      // 팬 범위: 뷰가 원본 밖으로 안 나가게
-      if(x<0)x=0; if(y<0)y=0; if(x+vw>W)x=W-vw; if(y+vh>H)y=H-vh;
-      cx=x+vw/2; cy=y+vh/2;
-      svg.setAttribute('viewBox', x+' '+y+' '+vw+' '+vh);
-      // 역보정
+      svg.style.transformOrigin='0 0';
+      svg.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')';
       var inv=1/scale;
-      pinEls.forEach(function(p){ p.el.setAttribute('r', (p.base*inv).toFixed(2)); });
-      seqStroke.forEach(function(s){ s.el.style.strokeWidth=(s.base*inv)+'px'; });
-      textEls.forEach(function(t){ t.el.style.fontSize=(t.base*inv)+'px'; });
-      arrowEls.forEach(function(a){
-        // 화살표는 중심 기준 스케일
-        var pts=a.getAttribute('points'); // 최초 저장
-        if(!a.__base){ a.__base=pts; }
+      keep.forEach(function(k){
+        // 확대의 역: 앵커를 중심으로 축소해서 원래 크기로
+        k.el.setAttribute('transform','translate('+k.ax+' '+k.ay+') scale('+inv+') translate('+(-k.ax)+' '+(-k.ay)+')');
       });
       if(reset) reset.classList.toggle('show', scale>1.01);
       if(hint) hint.style.opacity = scale>1.01 ? '0' : '1';
     }
-    // 화면 좌표 → 원본 SVG 좌표
-    function toSvg(clientX, clientY){
-      var rect=svg.getBoundingClientRect();
-      var vb=svg.viewBox.baseVal;
-      var px=(clientX-rect.left)/rect.width*vb.width + vb.x;
-      var py=(clientY-rect.top)/rect.height*vb.height + vb.y;
-      return {x:px,y:py};
+    function clamp(){
+      if(scale<MIN)scale=MIN; if(scale>MAX)scale=MAX;
+      var w=vp.clientWidth, h=vp.clientHeight;
+      var maxX=w*(scale-1), maxY=h*(scale-1);
+      if(tx>0)tx=0; if(tx<-maxX)tx=-maxX;
+      if(ty>0)ty=0; if(ty<-maxY)ty=-maxY;
     }
-    function zoomAt(clientX, clientY, factor){
-      var before=toSvg(clientX, clientY);
-      var ns=scale*factor;
-      if(ns<MIN)ns=MIN; if(ns>MAX)ns=MAX;
-      scale=ns;
-      // 줌 후 같은 화면점이 같은 원본점을 가리키도록 중심 보정
-      var vw=W/scale, vh=H/scale;
-      var rect=svg.getBoundingClientRect();
-      var fx=(clientX-rect.left)/rect.width, fy=(clientY-rect.top)/rect.height;
-      var x=before.x - fx*vw, y=before.y - fy*vh;
-      cx=x+vw/2; cy=y+vh/2;
-      apply();
+    function zoomAt(cx,cy,factor){
+      var rect=vp.getBoundingClientRect();
+      var px=cx-rect.left, py=cy-rect.top;
+      var ns=scale*factor; if(ns<MIN)ns=MIN; if(ns>MAX)ns=MAX;
+      var k=ns/scale;
+      tx=px-k*(px-tx); ty=py-k*(py-ty); scale=ns;
+      clamp(); apply();
     }
-
-    // 터치 (핀치+드래그)
-    var pts={}, startDist=0, startScale=1, lastMidX=0, lastMidY=0;
-    wrap.addEventListener('touchstart', function(e){
-      for(var i=0;i<e.changedTouches.length;i++){var t=e.changedTouches[i]; pts[t.identifier]={x:t.clientX,y:t.clientY};}
+    var pts={},startDist=0,startScale=1,lmx=0,lmy=0;
+    wrap.addEventListener('touchstart',function(e){
+      for(var i=0;i<e.changedTouches.length;i++){var t=e.changedTouches[i];pts[t.identifier]={x:t.clientX,y:t.clientY};}
       var ids=Object.keys(pts);
-      if(ids.length===2){var a=pts[ids[0]],b=pts[ids[1]]; startDist=Math.hypot(a.x-b.x,a.y-b.y); startScale=scale; lastMidX=(a.x+b.x)/2; lastMidY=(a.y+b.y)/2;}
-      else if(ids.length===1){ lastMidX=pts[ids[0]].x; lastMidY=pts[ids[0]].y; }
-    }, {passive:false});
-    wrap.addEventListener('touchmove', function(e){
-      for(var i=0;i<e.changedTouches.length;i++){var t=e.changedTouches[i]; if(pts[t.identifier]) pts[t.identifier]={x:t.clientX,y:t.clientY};}
+      if(ids.length===2){var a=pts[ids[0]],b=pts[ids[1]];startDist=Math.hypot(a.x-b.x,a.y-b.y);startScale=scale;lmx=(a.x+b.x)/2;lmy=(a.y+b.y)/2;}
+      else if(ids.length===1){lmx=pts[ids[0]].x;lmy=pts[ids[0]].y;}
+    },{passive:false});
+    wrap.addEventListener('touchmove',function(e){
+      for(var i=0;i<e.changedTouches.length;i++){var t=e.changedTouches[i];if(pts[t.identifier])pts[t.identifier]={x:t.clientX,y:t.clientY};}
       var ids=Object.keys(pts);
-      if(ids.length===2){
-        e.preventDefault();
-        var a=pts[ids[0]],b=pts[ids[1]];
-        var dist=Math.hypot(a.x-b.x,a.y-b.y);
-        var midX=(a.x+b.x)/2, midY=(a.y+b.y)/2;
-        var target=startScale*(dist/startDist);
-        zoomAt(midX,midY, (target/scale));
-        // 팬
-        var d1=toSvg(lastMidX,lastMidY), d2=toSvg(midX,midY);
-        cx-=(d2.x-d1.x); cy-=(d2.y-d1.y); lastMidX=midX; lastMidY=midY; apply();
-      } else if(ids.length===1 && scale>1.01){
-        e.preventDefault();
-        var p=pts[ids[0]];
-        var q1=toSvg(lastMidX,lastMidY), q2=toSvg(p.x,p.y);
-        cx-=(q2.x-q1.x); cy-=(q2.y-q1.y); lastMidX=p.x; lastMidY=p.y; apply();
-      }
-    }, {passive:false});
-    wrap.addEventListener('touchend', function(e){
-      for(var i=0;i<e.changedTouches.length;i++){ delete pts[e.changedTouches[i].identifier]; }
-      var ids=Object.keys(pts);
-      if(ids.length===1){ lastMidX=pts[ids[0]].x; lastMidY=pts[ids[0]].y; }
-    });
-
-    // 데스크톱: 휠 줌 + 드래그 팬
-    wrap.addEventListener('wheel', function(e){ e.preventDefault(); zoomAt(e.clientX,e.clientY, e.deltaY<0?1.15:0.87); }, {passive:false});
-    var drag=false, dsx=0, dsy=0;
-    wrap.addEventListener('mousedown', function(e){ if(scale>1.01){drag=true; dsx=e.clientX; dsy=e.clientY; wrap.style.cursor='grabbing';} });
-    window.addEventListener('mousemove', function(e){ if(drag){ var q1=toSvg(dsx,dsy), q2=toSvg(e.clientX,e.clientY); cx-=(q2.x-q1.x); cy-=(q2.y-q1.y); dsx=e.clientX; dsy=e.clientY; apply(); } });
-    window.addEventListener('mouseup', function(){ drag=false; wrap.style.cursor=''; });
-
-    if(reset) reset.addEventListener('click', function(){ scale=1; cx=W/2; cy=H/2; apply(); });
+      if(ids.length===2){e.preventDefault();var a=pts[ids[0]],b=pts[ids[1]];var dist=Math.hypot(a.x-b.x,a.y-b.y);var mx=(a.x+b.x)/2,my=(a.y+b.y)/2;if(startDist>0){zoomAt(mx,my,(startScale*(dist/startDist))/scale);}tx+=mx-lmx;ty+=my-lmy;lmx=mx;lmy=my;clamp();apply();}
+      else if(ids.length===1&&scale>1.01){e.preventDefault();var p=pts[ids[0]];tx+=p.x-lmx;ty+=p.y-lmy;lmx=p.x;lmy=p.y;clamp();apply();}
+    },{passive:false});
+    wrap.addEventListener('touchend',function(e){for(var i=0;i<e.changedTouches.length;i++){delete pts[e.changedTouches[i].identifier];}var ids=Object.keys(pts);if(ids.length===1){lmx=pts[ids[0]].x;lmy=pts[ids[0]].y;}});
+    wrap.addEventListener('wheel',function(e){e.preventDefault();zoomAt(e.clientX,e.clientY,e.deltaY<0?1.15:0.87);},{passive:false});
+    var drag=false,dsx=0,dsy=0;
+    wrap.addEventListener('mousedown',function(e){if(scale>1.01){drag=true;dsx=e.clientX;dsy=e.clientY;wrap.style.cursor='grabbing';}});
+    window.addEventListener('mousemove',function(e){if(drag){tx+=e.clientX-dsx;ty+=e.clientY-dsy;dsx=e.clientX;dsy=e.clientY;clamp();apply();}});
+    window.addEventListener('mouseup',function(){drag=false;wrap.style.cursor='';});
+    if(reset) reset.addEventListener('click',function(){scale=1;tx=0;ty=0;apply();});
     apply();
   })();
 </script>

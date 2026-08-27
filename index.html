@@ -307,6 +307,24 @@
   }
   .callout b { color: var(--coral); }
 
+  /* ---- Map ---- */
+  .mapwrap { margin: 18px 0 8px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--line); box-shadow: var(--shadow); background: #DCEEF2; }
+  :root:not([data-theme="light"]) .mapwrap { background: #0d2a30; }
+  :root[data-theme="dark"] .mapwrap { background: #0d2a30; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .mapwrap { background:#0d2a30; } }
+  .mapwrap svg { width: 100%; height: auto; display: block; }
+  .map-legend { display:flex; flex-wrap:wrap; gap:10px 16px; margin:12px 0 0; font-size:12.5px; }
+  .map-legend span { display:inline-flex; align-items:center; gap:6px; color:var(--ink-soft); }
+  .map-legend i { width:14px; height:14px; border-radius:50%; display:inline-block; flex:none; border:2px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.15); }
+  .mp-land { fill: #EAE2CE; stroke:#C9BE9E; stroke-width:1.2; }
+  :root:not([data-theme="light"]) .mp-land { fill:#1c3a3a; stroke:#2a5050; }
+  :root[data-theme="dark"] .mp-land { fill:#1c3a3a; stroke:#2a5050; }
+  .mp-route { fill:none; stroke: var(--coral); stroke-width:2.4; stroke-dasharray:6 5; opacity:.75; stroke-linecap:round; }
+  .mp-pin circle { stroke:#fff; stroke-width:2; }
+  .mp-pin text { font-family:"Noto Sans KR",sans-serif; font-weight:700; font-size:12px; fill:var(--ink); paint-order:stroke; stroke:var(--card); stroke-width:3px; }
+  .mp-num { font-family:"Zilla Slab",serif; font-weight:700; font-size:11px; fill:#fff; text-anchor:middle; }
+
   /* ---- Typhoon section ---- */
   .typhoon { margin: 22px 0; }
   .ty-card {
@@ -470,6 +488,53 @@
       <p class="label">숙소 · 예약 확정</p>
       <p class="val">부세나테라스 3박 <small>(Booking #6460629163 · PIN 9560)</small><br>리가로얄 그란 나하 1박 <small>(Trip.com · PIN 3094/1319)</small></p>
     </div>
+  </div>
+
+  <!-- Overview map -->
+  <h2 class="section-title" style="margin-top:8px;">🗺️ 한눈에 보는 동선</h2>
+  <p class="section-sub">남부 나하 ↔ 북부 부세나·츄라우미 · 숙소 3박은 북부, 마지막 1박은 나하</p>
+  <div class="mapwrap">
+    <svg viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="오키나와 본섬 일정 지도">
+      <!-- 오키나와 본섬 실루엣 (단순화) -->
+      <path class="mp-land" d="M470 95
+        C500 110 505 140 540 165 C575 190 600 220 605 255 C610 290 585 310 570 335
+        C552 362 535 360 520 385 C500 415 470 405 450 400 C425 393 415 375 400 380
+        C378 388 372 405 388 430 C400 450 392 470 372 470 C350 470 335 452 320 460
+        C300 470 292 500 275 545 C262 580 250 600 235 615 C215 635 250 650 262 632
+        C275 612 288 640 270 665 C250 690 220 700 205 720 C185 745 170 760 150 772
+        C128 785 95 800 88 790 C80 778 110 762 128 748 C150 730 165 700 180 675
+        C200 640 215 620 232 600 C255 572 268 545 282 508 C300 462 315 445 335 438
+        C358 430 372 435 388 420 C400 408 395 395 380 388 C360 378 358 355 375 348
+        C400 337 420 355 440 355 C462 355 478 340 490 320 C508 292 502 270 512 248
+        C522 226 545 218 552 195 C560 170 540 155 515 148 C490 140 478 122 470 95 Z"/>
+      <!-- 동선 -->
+      <path class="mp-route" d="M97.7 791.6 L557.3 327.6 L694 121.9" opacity="0.4"/>
+      <polyline class="mp-route" points="97.7,791.6 261.5,630.2 557.3,327.6"/>
+      <polyline class="mp-route" points="557.3,327.6 402.2,385.4 434.1,121.9"/>
+      <polyline class="mp-route" points="434.1,121.9 557.3,327.6"/>
+      <polyline class="mp-route" points="557.3,327.6 261.5,630.2 203.5,763.3 145.5,768.7"/>
+
+      <!-- 핀 -->
+      <g class="mp-pin">
+        <g><circle cx="97.7" cy="791.6" r="13" fill="#0E8C8C"/><text class="mp-num" x="97.7" y="796">✈</text><text x="118" y="796">나하공항</text></g>
+        <g><circle cx="145.5" cy="768.7" r="11" fill="#7C4DFF"/><text x="164" y="773">리가로얄(D4박)</text></g>
+        <g><circle cx="203.5" cy="763.3" r="11" fill="#E0674A"/><text x="222" y="768">슈리성</text></g>
+        <g><circle cx="261.5" cy="630.2" r="11" fill="#E0674A"/><text x="280" y="635">아메리칸빌리지</text></g>
+        <g><circle cx="392" cy="372" r="11" fill="#E0674A"/><text x="410" y="377">만좌모</text></g>
+        <g><circle cx="402.2" cy="385.4" r="8" fill="#C79A3A"/><text x="352" y="405">온나노에키</text></g>
+        <g><circle cx="557.3" cy="327.6" r="14" fill="#0A6E6E"/><text class="mp-num" x="557.3" y="332">🏨</text><text x="578" y="332">부세나(3박)</text></g>
+        <g><circle cx="577.6" cy="260.4" r="8" fill="#C79A3A"/><text x="595" y="265">A&amp;W나고</text></g>
+        <g><circle cx="434.1" cy="121.9" r="13" fill="#0E8C8C"/><text class="mp-num" x="434.1" y="126">🐋</text><text x="455" y="126">츄라우미</text></g>
+      </g>
+    </svg>
+  </div>
+  <div class="map-legend">
+    <span><i style="background:#0E8C8C"></i>공항·명소</span>
+    <span><i style="background:#0A6E6E"></i>부세나(3박)</span>
+    <span><i style="background:#7C4DFF"></i>리가로얄(1박)</span>
+    <span><i style="background:#E0674A"></i>관광</span>
+    <span><i style="background:#C79A3A"></i>맛집·기착</span>
+    <span style="color:var(--coral)">┈ 이동 동선</span>
   </div>
 
   <!-- DAY 1 -->

@@ -973,8 +973,17 @@
           html += '<div class="d"><div class="dd">D'+(k+1)+'·'+DOW[k]+'</div><div class="gg" style="color:var(--ink-faint)">–</div><div class="lbl">예보 대기</div></div>';
           return;
         }
+        var gv = d.wind_gusts_10m_max[i];
+        if (gv == null || gv === 0) {
+          // 값이 비면 풍속으로 대체, 그것도 없으면 대기 표시
+          gv = d.wind_speed_10m_max[i];
+        }
+        if (gv == null || gv === 0) {
+          html += '<div class="d"><div class="dd">D'+(k+1)+'·'+DOW[k]+'</div><div class="gg" style="color:var(--ink-faint)">–</div><div class="lbl">데이터 없음</div></div>';
+          return;
+        }
         anyData = true;
-        var g = Math.round(d.wind_gusts_10m_max[i]);
+        var g = Math.round(gv);
         if (g > maxGust) maxGust = g;
         var hi = g >= 90;
         html += '<div class="d'+(hi?' hi':'')+'"><div class="dd">D'+(k+1)+'·'+DOW[k]+'</div><div class="gg">'+g+'</div><div class="lbl">돌풍 km/h</div></div>';

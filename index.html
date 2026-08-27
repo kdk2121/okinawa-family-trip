@@ -1188,6 +1188,33 @@
     }).catch(function () { st.textContent = '태풍 데이터 로드 실패 (아래 링크로 확인)'; dot.className='ty-dot'; });
 
     // 2) JMA 오키나와 본섬 기상특보 헤드라인 (있으면 표시)
+    // 일본 기상 특보 문구 → 한국어 (정형 표현 사전 치환)
+    function jaToKo(s) {
+      var dict = [
+        ['沖縄本島地方','오키나와 본섬 지방'],['沖縄地方','오키나와 지방'],['先島諸島','사키시마 제도'],
+        ['大東島地方','다이토섬 지방'],['では','에서는 '],['にかけて','까지'],['まで','까지'],
+        ['昼前','정오 전'],['昼過ぎ','정오 지나'],['夕方','저녁'],['夜のはじめ頃','초저녁'],['夜遅く','밤 늦게'],
+        ['明け方','새벽'],['朝','아침'],['未明','미명(한밤~새벽)'],['日中','낮 동안'],
+        ['急な','갑작스러운 '],['強い雨','강한 비'],['激しい雨','거센 비'],['大雨','큰비(호우)'],
+        ['落雷','낙뢰'],['雷','천둥·번개'],['突風','돌풍'],['強風','강풍'],['暴風','폭풍'],
+        ['高波','높은 파도'],['波','파도'],['うねり','너울'],['竜巻','용오름(토네이도)'],
+        ['ひょう','우박'],['土砂災害','토사재해'],['浸水','침수'],['洪水','홍수'],['冠水','도로 침수'],
+        ['熱中症','온열질환'],['高温','고온'],['乾燥','건조'],['台風','태풍'],['接近','접근'],['上陸','상륙'],
+        ['注意してください','주의하세요'],['警戒してください','경계하세요'],['ご注意ください','주의 바랍니다'],
+        ['注意','주의'],['警戒','경계'],['見込み','예상'],['おそれ','우려'],['可能性','가능성'],
+        ['により','에 의해 '],['による','에 의한 '],['のため','때문에 '],
+        ['、',', '],['。','. ']
+      ];
+      var out = s;
+      // 전각 숫자 → 반각
+      out = out.replace(/[０-９]/g, function(c){ return String.fromCharCode(c.charCodeAt(0)-0xFEE0); });
+      dict.forEach(function (p) { out = out.split(p[0]).join(p[1]); });
+      // 남은 조사·단위
+      out = out.replace(/(\d+)日/g,'$1일').replace(/(\d+)時/g,'$1시').replace(/(\d+)頃/g,'$1시경');
+      out = out.split('や').join(', ').split('に').join(' ').split('の').join(' ').split('より').join('부터 ');
+      out = out.replace(/\s+/g,' ').replace(/\s+([,.])/g,'$1').trim();
+      return out;
+    }
     fetch('https://www.jma.go.jp/bosai/warning/data/warning/471000.json')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
@@ -1195,8 +1222,23 @@
         var box = document.getElementById('tyJma');
         var head = j.headlineText;
         var dt = j.reportDatetime ? j.reportDatetime.slice(0,10) : '';
-        if (head && head.trim()) {
-          box.innerHTML = '<b>일본 기상청 특보(오키나와, '+dt+')</b><br>' + head;
+        // 발표일이 얼마나 오래됐는지 계산 (오래되면 = 현재 유효 특보 아님)
+        var ageDays = null;
+        if (j.reportDatetime) {
+          var rt = new Date(j.reportDatetime);
+          var now = new Date();
+          ageDays = Math.floor((now - rt) / 86400000);
+        }
+        if (head && head.trim() && ageDays != null && ageDays <= 3) {
+          // 최근 발표 = 현재 유효한 특보
+          box.innerHTML = '<b>⚠️ 일본 기상청 특보 (오키나와, '+dt+')</b><br>' +
+            '<span style="color:var(--ink-soft)">🇯🇵 ' + head + '</span>' +
+            '<br><span style="color:var(--ink); margin-top:4px; display:inline-block">🇰🇷 ' + jaToKo(head) + '</span>';
+          box.classList.add('show');
+        } else {
+          // 오래된 리포트 = 지금 발효 중인 특보 없음
+          box.innerHTML = '<b style="color:#2F9E6B;">✅ 현재 발효 중인 특보 없음</b> ' +
+            '<span style="color:var(--ink-faint); font-size:12px;">(오키나와 · 마지막 특보 ' + (dt||'?') + ')</span>';
           box.classList.add('show');
         }
       }).catch(function () { /* JMA CORS 막히면 조용히 skip */ });

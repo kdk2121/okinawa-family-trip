@@ -1118,32 +1118,49 @@
   (function () {
     var links = Array.prototype.slice.call(document.querySelectorAll('.daynav a[data-day]'));
     var sections = links.map(function (a) { return document.getElementById(a.getAttribute('data-day')); });
+    var lockUntil = 0;   // 이 시각까지는 스크롤-스파이 갱신 잠금 (클릭 점프 중)
     function setActive(id) {
       links.forEach(function (a) {
         a.classList.toggle('active', a.getAttribute('data-day') === id);
       });
     }
+    function currentTop() {
+      var best = null, bestTop = Infinity;
+      sections.forEach(function (s) {
+        if (!s) return;
+        var r = s.getBoundingClientRect();
+        if (r.bottom > 70 && r.top < window.innerHeight * 0.6) {
+          if (r.top < bestTop) { bestTop = r.top; best = s.id; }
+        }
+      });
+      return best;
+    }
     if ('IntersectionObserver' in window) {
-      var visible = {};
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0; });
-        // pick the top-most currently-visible day
-        var best = null, bestTop = Infinity;
-        sections.forEach(function (s) {
-          if (!s) return;
-          var r = s.getBoundingClientRect();
-          if (r.bottom > 70 && r.top < window.innerHeight * 0.6) {
-            if (r.top < bestTop) { bestTop = r.top; best = s.id; }
-          }
-        });
+      var io = new IntersectionObserver(function () {
+        if (Date.now() < lockUntil) return;   // 클릭 점프 중엔 중간 섹션으로 안 바뀜
+        var best = currentTop();
         if (best) setActive(best);
       }, { rootMargin: '-60px 0px -40% 0px', threshold: [0, 0.25, 0.5, 1] });
       sections.forEach(function (s) { if (s) io.observe(s); });
     }
-    // tapping a nav link immediately marks it active
+    // 탭하면 즉시 해당 버튼 고정 + 스크롤 끝날 때까지 잠금
     links.forEach(function (a) {
-      a.addEventListener('click', function () { setActive(a.getAttribute('data-day')); });
+      a.addEventListener('click', function () {
+        setActive(a.getAttribute('data-day'));
+        lockUntil = Date.now() + 1000;   // 약 1초간 자동 갱신 억제 (부드러운 스크롤 완료까지)
+      });
     });
+    // 스크롤이 멎으면 잠금을 바로 풀고 현재 위치로 동기화
+    var scrollT;
+    window.addEventListener('scroll', function () {
+      if (Date.now() >= lockUntil) return;
+      clearTimeout(scrollT);
+      scrollT = setTimeout(function () {
+        lockUntil = 0;
+        var best = currentTop();
+        if (best) setActive(best);
+      }, 120);
+    }, { passive: true });
   })();
 
   /* ---- Live weather via Open-Meteo (no key, CORS-friendly) ---- */

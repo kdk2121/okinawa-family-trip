@@ -345,6 +345,29 @@
   .ty-jma.show { display: block; }
   .ty-jma b { color: var(--coral); }
 
+  /* ---- Appendix: baby shopping ---- */
+  .appendix { margin-top: 44px; padding-top: 30px; border-top: 2px dashed var(--line-teal); }
+  .apx-eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); font-weight: 700; margin: 0 0 6px; }
+  .shop-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 18px 0; }
+  .shop {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .shop h4 { margin: 0 0 3px; font-size: 15px; font-family: "Zilla Slab", serif; }
+  .shop .loc { font-size: 12.5px; color: var(--teal-deep); font-weight: 700; margin: 0 0 6px; }
+  .shop .hrs { font-size: 12px; color: var(--ink-faint); margin: 0 0 8px; font-variant-numeric: tabular-nums; }
+  .shop .tip { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
+  .shop .when-badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--coral-soft); color:var(--coral); border:1px solid var(--coral); margin-bottom:8px; }
+
+  .buylist { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 16px 0; }
+  .buycat { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--coral); border-radius: 10px; padding: 12px 15px; box-shadow: var(--shadow); }
+  .buycat h4 { margin: 0 0 8px; font-size: 14px; }
+  .buycat ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .buycat li { font-size: 13px; line-height: 1.5; color: var(--ink); display: flex; gap: 7px; align-items: flex-start; }
+  .buycat li::before { content: "🛒"; font-size: 11px; flex: none; margin-top: 2px; }
+  .buycat li b { color: var(--coral); font-weight: 700; }
+  .buycat li .why { color: var(--ink-soft); font-size: 12px; }
+
   footer {
     margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line);
     font-size: 12px; color: var(--ink-faint); line-height: 1.7;
@@ -414,6 +437,7 @@
   <a href="#d5" data-day="d5"><span class="dn">D5</span><span class="dd">14일</span></a>
   <span class="sep"></span>
   <a href="#todo" class="util" title="예약 To-Do"><span class="dn">✓</span></a>
+  <a href="#baby-shopping" class="util" title="아기용품 쇼핑"><span class="dn">🧸</span></a>
 </nav>
 
 <div class="wrap" id="top">
@@ -854,6 +878,79 @@
 
   <div class="callout" style="background:var(--card-tint); border-color:var(--line-teal);">
     <b style="color:var(--teal-deep);">🌡️ 9월 오키나와</b> — 여전히 덥고 습함(30도↑) + 태풍 시즌. 실내 명소(수족관)를 <b>비 오는 날 예비 코스</b>로 두면 유연합니다. 츄라우미 폐장 시간은 방문 주 <b>공식 홈페이지에서 최종 확인</b>.
+  </div>
+
+  <!-- Appendix: 아기용품 쇼핑 -->
+  <div class="appendix" id="baby-shopping">
+    <p class="apx-eyebrow">부록 · 유나 용품 쇼핑</p>
+    <h2 class="section-title" style="margin-top:4px;">🧸 일본에서 아기용품 사기</h2>
+    <p class="section-sub">일본은 아기용품 저렴+품질 좋기로 유명 · 우리 동선(아메리칸 빌리지·나하)에 매장이 딱 있음</p>
+
+    <h3 style="font-family:'Zilla Slab',serif; font-size:17px; margin:22px 0 4px;">🕐 언제 가면 좋나</h3>
+    <p class="section-sub" style="margin-bottom:12px;">D4(아메리칸 빌리지) 쇼핑 때가 최적 — 매장이 차탄에 몰려있음</p>
+    <div class="shop-cards">
+      <div class="shop">
+        <span class="when-badge">D4 아메리칸 빌리지</span>
+        <h4>아카짱혼포 한비타운점</h4>
+        <p class="loc">📍 차탄 기타마에 (아메빌 근처)</p>
+        <p class="hrs">🕘 9:00~22:00</p>
+        <p class="tip">일본 최대 아기용품 전문점. 종류 압도적 · 면세 되는 매장 많음(여권 지참)</p>
+      </div>
+      <div class="shop">
+        <span class="when-badge">D4 아메리칸 빌리지</span>
+        <h4>니시마츠야 미하마점</h4>
+        <p class="loc">📍 차탄 미하마 (아메빌 안)</p>
+        <p class="hrs">🕙 10:00~21:00</p>
+        <p class="tip">가성비 甲 아기옷·소모품. 여름 배바지·거즈 손수건 저렴</p>
+      </div>
+      <div class="shop">
+        <span class="when-badge">D4~D5 나하</span>
+        <h4>니시마츠야 신도심점</h4>
+        <p class="loc">📍 나하 오모로마치 (신도심)</p>
+        <p class="hrs">🕙 10:00~21:00 · 주차 40대</p>
+        <p class="tip">나하에서 마지막에 들르기 좋음 · 국제거리에서 가까움</p>
+      </div>
+    </div>
+    <div class="callout" style="background:var(--card-tint); border-color:var(--line-teal);">
+      <b style="color:var(--teal-deep);">💡 팁</b> — <b>D4 아메리칸 빌리지 점심(키지무나) 전후로 쇼핑</b>이 동선상 가장 효율적. 매장은 낮에 한산 · 저녁(18시↑) 붐빔 · <b>면세(5,000엔↑, 여권 필수)</b>는 아카짱혼포·돈키호테 등에서 · 부피 큰 건 짐 배송으로 호텔/공항 보내기.
+    </div>
+
+    <h3 style="font-family:'Zilla Slab',serif; font-size:17px; margin:28px 0 10px;">🛍️ 한국보다 싸거나 좋은 것 — 구매 리스트</h3>
+    <div class="buylist">
+      <div class="buycat">
+        <h4>🍼 수유·이유식</h4>
+        <ul>
+          <li><b>메이지 라쿠라쿠 큐브</b> 분유 <span class="why">— 계량 필요없는 큐브형, 외출·여행 최고</span></li>
+          <li><b>와코도·큐피 이유식 파우치</b> <span class="why">— 종류 많고 저렴, 유나 7개월용 딱</span></li>
+          <li>퓨어 물티슈·젖병세정제 <span class="why">— 성분 순하고 쌈</span></li>
+        </ul>
+      </div>
+      <div class="buycat">
+        <h4>👶 기저귀·소모품</h4>
+        <ul>
+          <li><b>메리즈 / 문리프 기저귀</b> <span class="why">— 일본 현지가가 한국 직구보다 쌀 때 많음</span></li>
+          <li>구운 물티슈·엉덩이 물티슈 <span class="why">— 두껍고 저렴</span></li>
+          <li>피죤 콧물흡입기·손톱가위 <span class="why">— 육아 필수템, 현지가 저렴</span></li>
+        </ul>
+      </div>
+      <div class="buycat">
+        <h4>👕 여름 아기옷</h4>
+        <ul>
+          <li><b>배바지(腹巻きパンツ)</b> <span class="why">— 얇고 통풍 좋아 더운 오키나와에 딱</span></li>
+          <li>거즈 손수건·턱받이 <span class="why">— 니시마츠야에 저렴하게 대량</span></li>
+          <li>UV 모자·래시가드 <span class="why">— 리조트·비치용</span></li>
+        </ul>
+      </div>
+      <div class="buycat">
+        <h4>🧴 스킨·상비</h4>
+        <ul>
+          <li><b>피죤·와코도 베이비로션</b> <span class="why">— 저자극, 한국보다 쌈</span></li>
+          <li>모기패치·가려움 연고(무히 베이비) <span class="why">— 9월 오키나와 모기 대비</span></li>
+          <li>체온계·해열시트 <span class="why">— 비상용</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="section-sub" style="margin-top:4px;">⚠️ 분유·이유식은 <b>유나 입에 맞는지</b> 소량 먼저 · 액체류(로션 등)는 기내 반입 제한 확인 · 면세는 개봉 말고 귀국 후 사용.</p>
   </div>
 
   <footer>

@@ -1006,10 +1006,14 @@
     <li class="warn"><b>목포삼촌 D4(9/13) 공항 이동</b> <span class="when now">중요</span><br>13:15 출발 → 공항 11:15 도착 목표 · 부세나에서 멀어 <b>택시/버스 오전 일찍</b>.
       <span class="k">호텔 하이어(0980-51-1333)가 가장 확실 · 버스면 오전 공항방향 배차 미리 확인</span></li>
 
+    <li class="warn"><b>유모차 도어투도어 신청</b> <span class="when now">출발 3시간 전까지</span><br>인천공항 위탁수하물을 집/호텔까지 배송해주는 서비스 (6세 미만 영유아 동반 대상).
+      <span class="k">굿럭(GoodLugg) 앱 or goodlugg.com에서 사전예약 · 유모차는 게이트까지 갖고 가서 탑승 직전 위탁(체크인/게이트 신청, 도착지까지 무료 운송)</span></li>
+
     <li><b>기타 준비물</b> <span class="when">출발 전</span>
       <ul class="subcheck">
         <li>여권 · 항공권 · 렌터카 바우처 · 숙소 예약 확인서</li>
-        <li>아기: 상비약 · 이유식 · 기저귀 · 아기띠 + 유모차</li>
+        <li>유나: 상비약 · 이유식 · 기저귀 · 아기띠 + 유모차</li>
+        <li><b>⚠️ 인천공항 수유실엔 전자레인지 없음</b> → 이유식·분유는 <b>편의점(GS25·CU 등)에서 데우기</b></li>
         <li>9월 오키나와 태풍 대비 → 여행자보험 · 항공 지연 대비 여유</li>
       </ul>
     </li>
@@ -1377,12 +1381,14 @@
     // 마커/라벨: 확대해도 일정 크기 유지 (각 요소를 앵커 기준 역스케일)
     var keep=[];
     svg.querySelectorAll('.mp-marker, .mp-label, .mp-extra > g > text, .mp-extra > g > circle').forEach(function(el){
-      // 앵커 좌표 구하기
+      // 앵커 좌표 구하기 (bbox 중심 사용 — circle 유무와 무관하게 안전)
       var ax, ay;
-      if(el.classList.contains('mp-marker')){
-        var c=el.querySelector('circle'); ax=parseFloat(c.getAttribute('cx')); ay=parseFloat(c.getAttribute('cy'));
-      } else if(el.tagName==='text'){ ax=parseFloat(el.getAttribute('x')); ay=parseFloat(el.getAttribute('y')); }
-      else if(el.tagName==='circle'){ ax=parseFloat(el.getAttribute('cx')); ay=parseFloat(el.getAttribute('cy')); }
+      try {
+        if(el.classList.contains('mp-marker')){
+          var b=el.getBBox(); ax=b.x+b.width/2; ay=b.y+b.height/2;
+        } else if(el.tagName==='text'){ ax=parseFloat(el.getAttribute('x')); ay=parseFloat(el.getAttribute('y')); }
+        else if(el.tagName==='circle'){ ax=parseFloat(el.getAttribute('cx')); ay=parseFloat(el.getAttribute('cy')); }
+      } catch(e){ return; }
       if(isFinite(ax)&&isFinite(ay)) keep.push({el:el, ax:ax, ay:ay});
     });
 

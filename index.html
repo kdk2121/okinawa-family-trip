@@ -13,37 +13,42 @@
 <body>
 <style>
   :root {
-    --sand: #FBF7EF;
+    /* 류큐 빙가타(紅型) 팔레트 — 주황·빨강·노랑 꽃 */
+    --sand: #FCF6EA;
     --card: #FFFFFF;
-    --card-tint: #EDF5F3;
-    --ink: #0C2E3A;
-    --ink-soft: #3F5A64;
-    --ink-faint: #7B8E94;
-    --teal: #0E8C8C;
-    --teal-deep: #0A6E6E;
-    --coral: #E0674A;
-    --coral-soft: #FBEAE4;
-    --line: #E3DDCF;
-    --line-teal: #CFE4E1;
-    --shadow: 0 1px 2px rgba(12,46,58,.04), 0 6px 20px rgba(12,46,58,.06);
-    --gold: #C79A3A;
+    --card-tint: #FCEFE0;
+    --ink: #3A2418;
+    --ink-soft: #6B4E3D;
+    --ink-faint: #A08670;
+    --teal: #D64A3F;         /* 빙가타 홍(주 accent) */
+    --teal-deep: #B83329;
+    --coral: #EE7B2E;        /* 주황 */
+    --coral-soft: #FCE7D3;
+    --line: #EAD9C2;
+    --line-teal: #F3D9BE;
+    --shadow: 0 1px 2px rgba(120,50,20,.05), 0 6px 20px rgba(120,50,20,.08);
+    --gold: #E8A72C;         /* 노랑 */
+    --biz-blue: #2E5A8F;     /* 붓꽃 남색 포인트 */
+    --biz-green: #3E9B5F;    /* 잎 초록 */
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --sand: #0A1B22;
-      --card: #10262F;
-      --card-tint: #133039;
-      --ink: #EAF2F1;
-      --ink-soft: #A8BEC2;
-      --ink-faint: #6C868C;
-      --teal: #3FB6B0;
-      --teal-deep: #6FD0C9;
-      --coral: #F0876B;
-      --coral-soft: #34211C;
-      --line: #1E3A43;
-      --line-teal: #235058;
-      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.28);
-      --gold: #D9B65C;
+      --sand: #241611;
+      --card: #33231B;
+      --card-tint: #3E2A20;
+      --ink: #F5E9DD;
+      --ink-soft: #C9B0A0;
+      --ink-faint: #8A7060;
+      --teal: #F0705F;
+      --teal-deep: #F58A6E;
+      --coral: #F5983F;
+      --coral-soft: #3E2A20;
+      --line: #4A3427;
+      --line-teal: #5A3E2C;
+      --shadow: 0 1px 2px rgba(0,0,0,.25), 0 8px 24px rgba(0,0,0,.3);
+      --gold: #F0BB4A;
+      --biz-blue: #6F9BD0;
+      --biz-green: #5FC080;
     }
   }
   :root[data-theme="dark"] {
@@ -67,7 +72,8 @@
   body {
     margin: 0;
     background:
-      radial-gradient(60% 40% at 100% 0%, rgba(14,140,140,.05), transparent 70%),
+      radial-gradient(55% 35% at 100% 0%, rgba(238,123,46,.06), transparent 70%),
+      radial-gradient(50% 30% at 0% 5%, rgba(214,74,63,.05), transparent 70%),
       var(--sand);
     background-attachment: fixed;
     color: var(--ink);
@@ -77,23 +83,18 @@
   }
   .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
 
-  /* ---- Header ---- */
+  /* ---- Header (빙가타 스타일) ---- */
   header {
     position: relative;
-    padding: 52px 22px 34px;
-    margin: 0 -22px 8px;
+    padding: 40px 0 30px;
     border-bottom: none;
-    background:
-      radial-gradient(120% 80% at 15% 0%, rgba(14,140,140,.10), transparent 60%),
-      radial-gradient(90% 70% at 95% 10%, rgba(224,103,74,.08), transparent 55%);
-    overflow: hidden;
   }
-  /* 은은한 물결 하단 라인 */
-  header::after {
-    content: "";
-    position: absolute; left: 0; right: 0; bottom: 0; height: 10px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='10' viewBox='0 0 48 10'><path d='M0 6 Q 12 0 24 6 T 48 6' fill='none' stroke='%230E8C8C' stroke-width='1.6' opacity='0.45'/></svg>");
-    background-repeat: repeat-x; background-size: 48px 10px;
+  /* 빙가타 꽃무늬 띠 (상단) */
+  .bingata-band {
+    height: 22px; margin: 0 0 26px; border-radius: 8px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='22' viewBox='0 0 120 22'><rect width='120' height='22' fill='%23D64A3F'/><g><circle cx='15' cy='11' r='6' fill='%23F2B233'/><circle cx='15' cy='11' r='2.5' fill='%23D64A3F'/><path d='M15 3 L17 8 L15 6 L13 8 Z M15 19 L17 14 L15 16 L13 14 Z M7 11 L12 13 L10 11 L12 9 Z M23 11 L18 13 L20 11 L18 9 Z' fill='%23FCF6EA'/><circle cx='45' cy='11' r='6' fill='%233E9B5F'/><circle cx='45' cy='11' r='2.5' fill='%23FCF6EA'/><path d='M40 6 Q45 9 50 6 M40 16 Q45 13 50 16' stroke='%23FCF6EA' stroke-width='1.4' fill='none'/><circle cx='75' cy='11' r='6' fill='%232E5A8F'/><path d='M75 5 Q80 8 78 11 Q80 14 75 17 Q70 14 72 11 Q70 8 75 5' fill='%23EE7B2E'/><circle cx='105' cy='11' r='6' fill='%23EE7B2E'/><circle cx='105' cy='11' r='2.5' fill='%23F2B233'/><path d='M105 3 L107 8 L105 6 L103 8 Z M105 19 L107 14 L105 16 L103 14 Z M97 11 L102 13 L100 11 L102 9 Z M113 11 L108 13 L110 11 L108 9 Z' fill='%23FCF6EA'/></g><path d='M0 21 Q30 17 60 21 T120 21' stroke='%23F2B233' stroke-width='1.2' fill='none' opacity='0.7'/></svg>");
+    background-repeat: repeat-x; background-size: auto 22px;
+    box-shadow: var(--shadow);
   }
   .eyebrow {
     font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
@@ -506,6 +507,7 @@
 <div class="wrap" id="top">
 
   <header>
+    <div class="bingata-band" aria-hidden="true"></div>
     <p class="eyebrow">가족 여행 · 3박 부세나 + 1박 나하</p>
     <h1>유나와 함께하는 오키나와</h1>
     <p class="subtitle">7개월 유나 포함 8명 · 렌터카 · 유나 페이스에 맞춘 4박 5일</p>

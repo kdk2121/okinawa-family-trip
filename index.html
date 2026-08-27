@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>오키나와 가족 여행</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+
+</head>
+<body>
+<style>
+  :root {
+    --sand: #FBF7EF;
+    --card: #FFFFFF;
+    --card-tint: #EDF5F3;
+    --ink: #0C2E3A;
+    --ink-soft: #3F5A64;
+    --ink-faint: #7B8E94;
+    --teal: #0E8C8C;
+    --teal-deep: #0A6E6E;
+    --coral: #E0674A;
+    --coral-soft: #FBEAE4;
+    --line: #E3DDCF;
+    --line-teal: #CFE4E1;
+    --shadow: 0 1px 2px rgba(12,46,58,.04), 0 6px 20px rgba(12,46,58,.06);
+    --gold: #C79A3A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --sand: #0A1B22;
+      --card: #10262F;
+      --card-tint: #133039;
+      --ink: #EAF2F1;
+      --ink-soft: #A8BEC2;
+      --ink-faint: #6C868C;
+      --teal: #3FB6B0;
+      --teal-deep: #6FD0C9;
+      --coral: #F0876B;
+      --coral-soft: #34211C;
+      --line: #1E3A43;
+      --line-teal: #235058;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.28);
+      --gold: #D9B65C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --sand: #0A1B22;
+    --card: #10262F;
+    --card-tint: #133039;
+    --ink: #EAF2F1;
+    --ink-soft: #A8BEC2;
+    --ink-faint: #6C868C;
+    --teal: #3FB6B0;
+    --teal-deep: #6FD0C9;
+    --coral: #F0876B;
+    --coral-soft: #34211C;
+    --line: #1E3A43;
+    --line-teal: #235058;
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.28);
+    --gold: #D9B65C;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--sand);
+    color: var(--ink);
+    font-family: "Noto Sans KR", system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ---- Header ---- */
+  header {
+    padding: 52px 0 30px;
+    border-bottom: 2px solid var(--line-teal);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--teal-deep); font-weight: 700; margin: 0 0 10px;
+  }
+  h1 {
+    font-family: "Zilla Slab", Georgia, serif;
+    font-weight: 700; font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.04; margin: 0 0 6px; letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+  .subtitle {
+    font-family: "Zilla Slab", serif; font-weight: 500;
+    font-size: clamp(17px, 2.4vw, 21px); color: var(--ink-soft); margin: 0;
+  }
+  .route {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    margin-top: 18px; font-family: "Zilla Slab", serif;
+    font-size: 15px; color: var(--ink-soft);
+  }
+  .route b { color: var(--ink); font-weight: 600; }
+  .route .arrow { color: var(--teal); font-weight: 700; }
+
+  /* ---- Summary strip ---- */
+  .facts {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin: 26px 0 40px;
+  }
+  .fact {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .fact .label {
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 700; margin: 0 0 4px;
+  }
+  .fact .val { font-size: 14px; font-weight: 500; margin: 0; color: var(--ink); }
+  .fact .val small { color: var(--ink-soft); font-weight: 400; }
+
+  /* ---- Day block ---- */
+  .day { margin-bottom: 14px; }
+  .day-head {
+    display: flex; align-items: center; gap: 14px;
+    position: sticky; top: 0; z-index: 5;
+    background: var(--sand); padding: 18px 0 12px;
+  }
+  .daynum {
+    flex: none;
+    font-family: "Zilla Slab", serif; font-weight: 700;
+    width: 46px; height: 46px; border-radius: 12px;
+    background: var(--teal); color: #fff;
+    display: grid; place-items: center; font-size: 18px;
+    box-shadow: var(--shadow);
+  }
+  .day-head h2 {
+    font-family: "Zilla Slab", serif; font-weight: 600;
+    font-size: 21px; margin: 0; line-height: 1.15;
+  }
+  .day-head .date { display: block; font-size: 13px; color: var(--ink-faint); font-weight: 500; font-family: "Noto Sans KR", sans-serif; }
+  .day-head .tag {
+    margin-left: auto; font-size: 12px; font-weight: 700;
+    color: var(--teal-deep); background: var(--card-tint);
+    border: 1px solid var(--line-teal); padding: 5px 11px; border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .row {
+    display: grid; grid-template-columns: 74px 1fr;
+    gap: 16px; padding: 15px 20px;
+    border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: none; }
+  .time {
+    font-family: "Zilla Slab", serif; font-weight: 600;
+    font-size: 14px; color: var(--teal-deep);
+    font-variant-numeric: tabular-nums; padding-top: 1px;
+  }
+  .what { margin: 0; }
+  .what .title { font-weight: 700; font-size: 15px; margin: 0 0 2px; }
+  .what .desc { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+
+  /* highlight rows (major spots) */
+  .row.spot .what .title::before {
+    content: "📍"; margin-right: 6px; font-size: 13px;
+  }
+
+  /* food + nursing badges */
+  .meta { display: flex; flex-direction: column; gap: 7px; margin-top: 9px; }
+  .badge {
+    display: inline-flex; align-items: flex-start; gap: 7px;
+    font-size: 13px; line-height: 1.45; padding: 7px 11px;
+    border-radius: 9px; width: fit-content; max-width: 100%;
+  }
+  .badge.food {
+    background: var(--card-tint); border: 1px solid var(--line-teal); color: var(--ink);
+  }
+  .badge.milk {
+    background: var(--coral-soft); border: 1px solid var(--coral); color: var(--ink);
+  }
+  .badge.park {
+    background: transparent; border: 1px dashed var(--line-teal); color: var(--ink-soft);
+  }
+  .badge.park b { color: var(--ink); }
+  .badge .ic { flex: none; font-size: 13px; line-height: 1.4; }
+  .badge b { font-weight: 700; }
+  .badge .note { color: var(--ink-soft); }
+
+  /* ---- Compare table ---- */
+  .section-title {
+    font-family: "Zilla Slab", serif; font-weight: 700;
+    font-size: 24px; margin: 54px 0 6px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-sub { color: var(--ink-soft); font-size: 14px; margin: 0 0 20px; }
+  .table-scroll { overflow-x: auto; border-radius: 14px; box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; background: var(--card); }
+  th, td { text-align: left; padding: 13px 16px; font-size: 13.5px; border-top: 1px solid var(--line); vertical-align: top; }
+  thead th {
+    background: var(--teal); color: #fff; font-weight: 700; font-size: 12.5px;
+    letter-spacing: .03em; border: none;
+  }
+  tbody tr:first-child td { border-top: none; }
+  td .place { font-weight: 700; }
+  .pill {
+    display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px;
+    border-radius: 12px; background: var(--card-tint); color: var(--teal-deep);
+    border: 1px solid var(--line-teal);
+  }
+  .pill.rec { background: var(--coral-soft); color: var(--coral); border-color: var(--coral); }
+  .stars { color: var(--gold); letter-spacing: 1px; font-size: 13px; }
+
+  /* ---- Checklist ---- */
+  .checklist { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .checklist li {
+    background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--teal);
+    border-radius: 10px; padding: 12px 16px 12px 44px; font-size: 14px; box-shadow: var(--shadow);
+    position: relative;
+  }
+  .checklist li::before {
+    content: ""; position: absolute; left: 15px; top: 13px;
+    width: 17px; height: 17px; border: 2px solid var(--teal);
+    border-radius: 5px; background: var(--card);
+  }
+  .checklist li b { font-weight: 700; }
+  .checklist li.warn { border-left-color: var(--coral); }
+  .checklist li.warn::before { border-color: var(--coral); }
+  .checklist .k { color: var(--ink-soft); font-size: 13px; }
+  .checklist .when {
+    display: inline-block; font-size: 11px; font-weight: 700; margin-left: 6px;
+    padding: 1px 7px; border-radius: 10px; background: var(--card-tint);
+    color: var(--teal-deep); border: 1px solid var(--line-teal); vertical-align: 1px;
+  }
+  .checklist .when.now { background: var(--coral-soft); color: var(--coral); border-color: var(--coral); }
+  .callphone {
+    font-family: "Zilla Slab", serif; font-weight: 600; color: var(--teal-deep);
+    font-variant-numeric: tabular-nums;
+  }
+  .subcheck { margin: 8px 0 0; padding-left: 2px; list-style: none; display: grid; gap: 5px; }
+  .subcheck li {
+    all: unset; display: block; font-size: 13px; color: var(--ink-soft);
+    padding-left: 20px; position: relative;
+  }
+  .subcheck li::before {
+    content: "☐"; position: absolute; left: 0; top: 0; color: var(--teal); font-size: 13px;
+  }
+
+  .callout {
+    background: var(--coral-soft); border: 1px solid var(--coral);
+    border-radius: 12px; padding: 14px 18px; margin: 22px 0; font-size: 13.5px;
+  }
+  .callout b { color: var(--coral); }
+
+  footer {
+    margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--ink-faint); line-height: 1.7;
+  }
+  footer a { color: var(--teal-deep); }
+
+  @media (max-width: 560px) {
+    .facts { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 60px 1fr; gap: 12px; padding: 14px 15px; }
+    .day-head .tag { display: none; }
+  }
+  @media print {
+    .day-head { position: static; }
+    body { background: #fff; }
+    .card, .fact, .checklist li { box-shadow: none; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">가족 여행 · 3박 부세나 + 1박 나하</p>
+    <h1>오키나와, 아기와 함께</h1>
+    <p class="subtitle">7개월 아기 포함 8명 · 렌터카 · 아기 페이스에 맞춘 4박 5일</p>
+    <div class="route">
+      <span><b>ICN</b> 09/10 09:45</span>
+      <span class="arrow">→</span>
+      <span><b>OKA</b> 12:05</span>
+      <span style="color:var(--ink-faint);">···</span>
+      <span><b>OKA</b> 09/14 13:15</span>
+      <span class="arrow">→</span>
+      <span><b>ICN</b> 15:30</span>
+    </div>
+  </header>
+
+  <div class="facts">
+    <div class="fact">
+      <p class="label">인원</p>
+      <p class="val">성인·아동 7명 + <small>7개월 아기 1명</small></p>
+    </div>
+    <div class="fact">
+      <p class="label">렌터카</p>
+      <p class="val">코이코이 오키나와 · 알파드 8인승 <small>(카시트 1석)</small></p>
+    </div>
+    <div class="fact">
+      <p class="label">숙소</p>
+      <p class="val">부세나테라스 3박 · <small>리가로얄 나하 1박</small></p>
+    </div>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="daynum">D1</div>
+      <div><h2>도착 · 부세나 직행<span class="date">9/10 (목)</span></h2></div>
+      <span class="tag">이동 최소 · 리조트 휴식</span>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="time">12:05</div>
+        <div class="what"><p class="title">나하공항(OKA) 도착</p><p class="desc">짐 찾기 · 8명이라 여유 있게</p>
+          <div class="meta"><span class="badge milk"><span class="ic">🍼</span><span><b>수유실</b> 나하공항 터미널 내 완비 <span class="note">— 도착 직후 수유·기저귀 교환</span></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">~13:30</div>
+        <div class="what"><p class="title">렌터카 수속 · 카시트 장착 확인</p><p class="desc">코이코이 오키나와 렌터카 · 아기 카시트 좌석 1개 점유</p></div>
+      </div>
+      <div class="row">
+        <div class="time">13:30</div>
+        <div class="what"><p class="title">가벼운 점심</p><p class="desc">공항·이동 길목에서 간단히 (첫날은 무리 금지)</p>
+          <div class="meta"><span class="badge food"><span class="ic">🍽️</span><span>이동 중 아기 낮잠 유도 — 맛집보다 <b>간단·빠른 식사</b></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">14:30</div>
+        <div class="what"><p class="title">부세나로 이동 (약 75~90분)</p><p class="desc">아기 차에서 낮잠</p></div>
+      </div>
+      <div class="row spot">
+        <div class="time">16:00</div>
+        <div class="what"><p class="title">부세나테라스 일찍 체크인</p><p class="desc">목욕 · 저녁 · 일찍 재우기 → 첫날은 컨디션 회복 우선</p>
+          <div class="meta"><span class="badge milk"><span class="ic">🍼</span><span><b>수유실·기저귀 교환</b> 리조트 내 완비 <span class="note">· 베이비베드 사전 요청</span></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">저녁</div>
+        <div class="what"><p class="title">🛒 남자들 장보기 원정 (아기·가족은 리조트 휴식)</p><p class="desc">저녁거리 + 다음날 아침거리 + 아기용품 사오기</p>
+          <div class="meta">
+            <span class="badge food"><span class="ic">🛒</span><span><b>맥스밸류 나고점</b> · 부세나에서 차 약 10분 · <b>24시간</b> <span class="note">(반찬·도시락·과일 / 아기 물·이유식 파우치 / 기저귀·물티슈)</span></span></span>
+            <span class="badge park"><span class="ic">🏪</span><span><b>급할 때</b> 패밀리마트(3분)·로손(5분) 24시간 <span class="note">· 마트 귀찮으면 편의점으로 커버</span></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="daynum">D2</div>
+      <div><h2>츄라우미 수족관<span class="date">9/11 (금)</span></h2></div>
+      <span class="tag">오후 늦게 = 한산 ⭐</span>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="time">오전</div>
+        <div class="what"><p class="title">리조트에서 여유</p><p class="desc">조식 · 비치 · 수영장 → 아기 오전 컨디션·낮잠 확보</p>
+          <div class="meta"><span class="badge food"><span class="ic">🍔</span><span><b>맥도날드 나고점</b>에서 맥그리들 조금 사오기 <span class="note">나고 아가리에 58호선변 · 부세나에서 차 15~20분 (츄라우미 가는 길목)</span></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">12:00</div>
+        <div class="what"><p class="title">점심 = 조식→런치 뷔페 대체 (리조트에서 먼저)</p><p class="desc">조식 포함 플랜을 라 티다 런치 뷔페로 대체 → 추가비용 없이 든든하게, 이동 0분</p>
+          <div class="meta">
+            <span class="badge food"><span class="ic">🍽️</span><span><b>라 티다 런치 뷔페</b> 12:00~15:00 · 이유식 대응·수유실 완비 <span class="note">⚠️ 조식→런치 대체 가능 여부는 체크인 시 프론트 확인</span></span></span>
+            <span class="badge food"><span class="ic">🍽️</span><span><b>대안</b> 코코식당·치누만(츄라우미 근처) <span class="note">— 지나갈 때 or 늦은 점심용</span></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">13:30</div>
+        <div class="what"><p class="title">츄라우미로 출발 (약 50분) — 관광만</p><p class="desc">점심은 리조트에서 해결하고 감 · 아기 차에서 낮잠</p></div>
+      </div>
+      <div class="row spot">
+        <div class="time">15:00</div>
+        <div class="what"><p class="title">츄라우미 수족관</p><p class="desc">오후엔 단체·크루즈 손님 빠져 한산 · 고래상어 수조 사진 좋음</p>
+          <div class="meta">
+            <span class="badge milk"><span class="ic">🍼</span><span><b>수유실</b> 수족관·해양박공원 내 여러 곳 + 기저귀교환대 <span class="note">· 치누만 2층에도 수유실</span></span></span>
+            <span class="badge park"><span class="ic">🅿️</span><span><b>주차 무료</b> · 9개소 넉넉 <span class="note">(입구 가까운 곳은 오전 혼잡 → 오후엔 여유)</span></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="row spot">
+        <div class="time">16:00</div>
+        <div class="what"><p class="title">돌고래쇼 (오키짱 극장) · 에메랄드비치</p><p class="desc">막바지 회차 + 선셋 산책</p></div>
+      </div>
+      <div class="row">
+        <div class="time">18:00</div>
+        <div class="what"><p class="title">부세나 복귀 → 저녁</p><p class="desc">츄라우미에서 돌아오는 길, 리조트 근처</p>
+          <div class="meta">
+            <span class="badge food"><span class="ic">🍽️</span><span><b>카후(かふぅ) 나키마 본점 · 아구 샤브샤브</b> · 부세나 근처 나키마 <span class="note">아구 샤브 코스 4,700엔(7품)·오키나와요리 단품 多(두부·야채·소바) / ⚠️ 금요일 예약 필수 · 좌식·키즈체어는 전화 확인 098-927-2734</span></span></span>
+            <span class="badge park"><span class="ic">🍽️</span><span><b>대안</b> 오션부 아구 샤브샤브(키즈체어·룸) / 라 티다 뷔페(이동 0분·피곤한 날)</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="daynum">D3</div>
+      <div><h2>만좌모 · 리조트 데이<span class="date">9/12 (토)</span></h2></div>
+      <span class="tag">아기 페이스 조절</span>
+    </div>
+    <div class="card">
+      <div class="row spot">
+        <div class="time">오전</div>
+        <div class="what"><p class="title">만좌모(万座毛)</p><p class="desc">부세나에서 15~20분 · 코끼리코 절벽</p>
+          <div class="meta">
+            <span class="badge milk"><span class="ic">🍼</span><span><b>수유실 3실</b> + 기저귀교환 베드 5대 · 분유용 급탕기·젖병 세척대 <span class="note">· 유모차 무료 대여 (오키나와 명소 중 최고 시설)</span></span></span>
+            <span class="badge park"><span class="ic">🅿️</span><span><b>주차 무료</b> · 제1·2 약 300대 <span class="note">(입장료 1인 100엔, 미취학 무료)</span></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">점심</div>
+        <div class="what"><p class="title">A&W 나고점 (에이앤더블유 버거)</p><p class="desc">나고 아가리에 58호선변 · 오키나와 명물 루트비어</p>
+          <div class="meta"><span class="badge food"><span class="ic">🍔</span><span><b>A&W 나고점</b> · <b>24시간 · 드라이브인</b>(차 탄 채 주문·식사 가능) <span class="note">31 아이스크림 병설 · 아기 데리고 차에서 편하게 먹기 좋음</span></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">오후</div>
+        <div class="what"><p class="title">리조트 복귀 → 부세나테라스 만끽</p><p class="desc">수영장 · 비치 · 글라스보트 → 이동 없이 쉬는 날</p></div>
+      </div>
+      <div class="row">
+        <div class="time">저녁</div>
+        <div class="what"><p class="title">온나 선셋몰 · 치누만 나키마점</p><p class="desc">리조트 데이라 여유 · 민요 산신 라이브로 오키나와 밤 분위기</p>
+          <div class="meta">
+            <span class="badge food"><span class="ic">🍽️</span><span><b>오키나와요리 치누만 · 온나 선셋몰 나키마점</b> · 류큐 고민가·좌식·<b>산신 라이브(19시~)</b> <span class="note">⚠️ <b>라이브 관람석은 한정</b> → 예약 시 "라이브 관람 희망" 필수 명시 · 리퀘스트 OK</span></span></span>
+            <span class="badge park"><span class="ic">🚐</span><span><b>부세나테라스 무료 셔틀 대상</b> · 요예약 <span class="note">단, 공식/전화 예약 고객만 셔틀 이용 가능(넷 예약 시 불가) · 아기 카시트 유무 확인</span></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="daynum">D4</div>
+      <div><h2>아메리칸 빌리지 · 나하 (슈리성 선택)<span class="date">9/13 (일)</span></h2></div>
+      <span class="tag">남하 · 체크인 먼저</span>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="time">10:00</div>
+        <div class="what"><p class="title">부세나테라스 체크아웃</p></div>
+      </div>
+      <div class="row spot">
+        <div class="time">11:00</div>
+        <div class="what"><p class="title">아메리칸 빌리지 (약 50분, 길목)</p><p class="desc">점심 + 쇼핑 · 데포아일랜드</p>
+          <div class="meta">
+            <span class="badge food"><span class="ic">🍽️</span><span><b>타코라이스 카페 키지무나 데포아일랜드점</b> · 박스석·키즈메뉴 <span class="note">(확정)</span></span></span>
+            <span class="badge food"><span class="ic">🍽️</span><span><b>THE CALIF KITCHEN</b> · 기저귀·분유·온수 무료, 수유실 완비 <span class="note">(예비 — 웨이팅 시)</span></span></span>
+            <span class="badge milk"><span class="ic">🍼</span><span><b>수유실</b> 데포아일랜드 각 몰 + 키지무나·CALIF 매장 내</span></span>
+            <span class="badge park"><span class="ic">🅿️</span><span><b>주차 무료</b> · 미하마 공영주차장 1,500대 <span class="note">(도보 약 10분 · 일부 몰 직결 주차는 별도 요금)</span></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">14:00</div>
+        <div class="what"><p class="title">나하로 이동 (약 40분)</p></div>
+      </div>
+      <div class="row spot">
+        <div class="time">15:00</div>
+        <div class="what"><p class="title">리가로얄 오키나와 체크인 (먼저!)</p><p class="desc">모노레일 旭橋(아사히바시)역 앞 · 공항 접근성 최고 · 체크인·짐 풀고 아기 쉬게 한 뒤 선택적으로 외출</p></div>
+      </div>
+      <div class="row spot">
+        <div class="time">선택</div>
+        <div class="what"><p class="title">슈리성(首里城) — 컨디션 되면</p><p class="desc">아기·어르신 컨디션 보고 갈지 결정 · 일부 계단 있음 → 유모차+아기띠 병행 · 리가로얄에서 약 15~20분</p>
+          <div class="meta"><span class="badge park"><span class="ic">🅿️</span><span><b>지하주차장 1회 320엔</b> · 110대+ <span class="note">(8:30~18:00 · 이 일정 유일한 유료 주차 · 늦게 가면 마감 주의)</span></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">저녁 전</div>
+        <div class="what"><p class="title">국제거리(고쿠사이도리) — 선택</p><p class="desc">쇼핑·기념품 · 리가로얄에서 도보권(현청앞) · 컨디션 따라 생략 가능</p>
+          <div class="meta"><span class="badge milk"><span class="ic">🍼</span><span><b>수유·기저귀 거점</b> 팔레트쿠모지 8F 리우보우 백화점 베이비룸 ⭐ · 나하트(쿠모지) · 제1마키시시장 2F · 현청앞/마키시역 복지화장실 <span class="note">(가장 확실: 리우보우 8F — 수유+기저귀 둘 다, 국제거리 남쪽 초입=리가로얄 근처)</span></span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">저녁</div>
+        <div class="what"><p class="title">나하 저녁 (현지에서 결정)</p><p class="desc">마지막 밤 — 그날 컨디션·짐 상태 보고 결정 · 리가로얄(현청앞/旭橋) 도보권 위주</p>
+          <div class="meta">
+            <span class="badge food"><span class="ic">🥩</span><span><b>후보1 · 야키니쿠 "부치(ぶち)" 쿠모지점</b> · 현청앞역 도보 2분 · 3~4천엔 · <b>12인 룸 O</b> <span class="note">가성비·개별룸·현지음식 아님 / 098-943-6567</span></span></span>
+            <span class="badge food"><span class="ic">🍽️</span><span><b>후보2 · 파이카지 국제거리점</b> · 좌식·개별룸 + 산신 라이브(1인 550엔) <span class="note">오키나와요리 한 번 더 + 라이브 원하면</span></span></span>
+            <span class="badge park"><span class="ic">🍴</span><span><b>후보3</b> EL Patio(화덕피자·이탈리안, 도보 7분) / 호텔 내 식사(짐 정리·아기 취침 편함)</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day">
+    <div class="day-head">
+      <div class="daynum">D5</div>
+      <div><h2>출국<span class="date">9/14 (월)</span></h2></div>
+      <span class="tag">공항 2시간 전 도착</span>
+    </div>
+    <div class="card">
+      <div class="row">
+        <div class="time">오전</div>
+        <div class="what"><p class="title">리가로얄 조식 · 마지막 쇼핑</p></div>
+      </div>
+      <div class="row">
+        <div class="time">10:30</div>
+        <div class="what"><p class="title">렌터카 반납 (공항 근처)</p></div>
+      </div>
+      <div class="row">
+        <div class="time">11:00</div>
+        <div class="what"><p class="title">공항 도착 · 체크인</p><p class="desc">8명 + 아기라 2시간 전 권장</p>
+          <div class="meta"><span class="badge milk"><span class="ic">🍼</span><span><b>수유실</b> 나하공항 터미널 내 — 출국 전 마지막 수유·기저귀</span></span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="time">13:15</div>
+        <div class="what"><p class="title">나하(OKA) 출발 → 15:30 인천</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parking -->
+  <h2 class="section-title">🅿️ 주차 한눈에</h2>
+  <p class="section-sub">명소 대부분 무료 · 슈리성만 유료 (320엔)</p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>명소</th><th>수용</th><th>요금</th><th>메모</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="place">츄라우미 수족관</span></td><td>9개소 (넉넉)</td><td><span class="pill">무료</span></td><td>오후 방문이라 여유 · 입구 가까운 곳 노리기 쉬움</td></tr>
+        <tr><td><span class="place">만좌모</span></td><td>제1·2 약 300대</td><td><span class="pill">무료</span></td><td>입장료만 1인 100엔 (미취학 무료)</td></tr>
+        <tr><td><span class="place">아메리칸 빌리지</span></td><td>미하마 공영 1,500대</td><td><span class="pill">무료</span></td><td>도보 약 10분 · 일부 몰 직결 주차는 별도</td></tr>
+        <tr><td><span class="place">슈리성</span></td><td>지하 110대+</td><td><span class="pill rec">320엔 / 1회</span></td><td>8:30~18:00 · 이 일정 유일한 유료</td></tr>
+        <tr><td><span class="place">부세나·리가로얄</span></td><td>숙박객</td><td><span class="pill">숙소</span></td><td>투숙 중 주차는 숙소에서 안내</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Compare -->
+  <h2 class="section-title">🍽️ 부세나 3박 저녁 계획</h2>
+  <p class="section-sub">전부 리조트 근처(차 10~15분) · 8명이라 어디든 사전 예약 필수</p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>날</th><th>장소</th><th>이동</th><th>아기 편의</th><th>비고</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pill">D1 · 목</span></td>
+          <td><span class="place">리조트에서 (장 봐온 것)</span></td>
+          <td>0분</td>
+          <td><span class="stars">★★★</span><br>가장 편함</td>
+          <td>남자들 맥스밸류 장보기 → 리조트에서 간단히</td>
+        </tr>
+        <tr>
+          <td><span class="pill rec">D2 · 금</span></td>
+          <td><span class="place">카후(かふぅ) 나키마 본점 · 아구 샤브샤브</span></td>
+          <td>약 10분</td>
+          <td><span class="stars">★★★</span><br>코스 4,700엔·소바/두부</td>
+          <td>츄라우미 복귀 길 · ⚠️ 금요일 예약 · 좌식 전화 확인</td>
+        </tr>
+        <tr>
+          <td><span class="pill rec">D3 · 토</span></td>
+          <td><span class="place">온나 선셋몰 · 치누만 나키마점</span></td>
+          <td>약 10분</td>
+          <td><span class="stars">★★★</span><br>좌식·라이브</td>
+          <td>민요 산신 라이브 · ⚠️ 토요일 조기 예약</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <b>💡 대안 (컨디션 따라)</b> — 피곤한 날은 <b>라 티다 뷔페</b>(이동 0분, 이유식 대응)로 대체 / 아구 샤브샤브는 <b>오션부(Ocean Boo!)</b>도 키즈체어·룸 있어 좋음.
+    <br><small>⚠️ 리조트 메인다이닝 '파누안'·철판 '류탄'은 초등생 이상만 → 아기 불가.</small>
+  </div>
+
+  <!-- To-Do -->
+  <h2 class="section-title">✅ 예약 To-Do</h2>
+  <p class="section-sub">출발 전 처리할 것 — 되돌리기 어려운 것부터</p>
+  <ul class="checklist">
+    <li class="warn"><b>렌터카 카시트</b> <span class="when now">지금</span><br>코이코이 오키나와에 <b>0~1세용 카시트</b> 예약 요청 (일본 6세 미만 법적 의무).
+      <span class="k">알파드 8인승 = 좌석 딱 맞음, 짐은 트렁크뿐 → 캐리어 많으면 부세나→리가로얄 이동 시 일부 숙소 택배 고려.</span></li>
+
+    <li class="warn"><b>D2(금 9/11) 저녁 · 카후(かふぅ) 나키마 본점</b> <span class="when now">서둘러</span>
+      <span class="callphone">📞 098-927-2734</span>
+      <ul class="subcheck">
+        <li>8명 + 아기 예약</li>
+        <li>좌식 / 키즈체어 가능 여부 확인</li>
+        <li>아구 샤브 코스 인원분 (4,700엔) · 아기·유아 먹을 것(두부·야채·소바) 상담</li>
+      </ul>
+    </li>
+
+    <li class="warn"><b>D3(토 9/12) 저녁 · 치누만 나키마점</b> <span class="when now">서둘러</span>
+      <span class="callphone">📞 098-967-7551 (13:00~17:00)</span>
+      <span class="k">토요일이라 경쟁 심함 · 전화 예약 추천(넷 예약 시 셔틀 불가)</span>
+      <ul class="subcheck">
+        <li>8명 + 아기 예약 · <b>"라이브 관람석 희망" 반드시 명시</b></li>
+        <li>산신 라이브 시작 시간·회차 확인 (19시~ / 나키마점 기준)</li>
+        <li>부세나테라스 무료 셔틀 요청 + <b>아기 카시트 유무</b> 확인</li>
+        <li>좌식 / 키즈체어</li>
+      </ul>
+    </li>
+
+    <li><b>부세나테라스</b> <span class="when">체크인 전</span>
+      <ul class="subcheck">
+        <li>베이비베드(아기 침대) 사전 요청</li>
+        <li>이유식 상담 (이용 1주 전까지)</li>
+        <li>조식 → 런치 뷔페 대체 가능 여부 (체크인 시 프론트 확인)</li>
+      </ul>
+    </li>
+
+    <li><b>D4(일 9/13) 점심 · 키지무나 데포아일랜드점</b> <span class="when">출발 전</span><br>8명 예약 (박스석 요청)</li>
+
+    <li><b>D4(일 9/13) 저녁</b> <span class="when">현지 결정</span><br>마지막 밤 — 현지에서 컨디션 보고 후보 중 선택 (부치/파이카지/EL Patio/호텔).
+      <span class="k">가고 싶은 곳이 정해지면 당일 낮에 전화 예약 (부치 098-943-6567 · 일요일이라 룸은 미리)</span></li>
+
+    <li><b>기타 준비물</b> <span class="when">출발 전</span>
+      <ul class="subcheck">
+        <li>여권 · 항공권 · 렌터카 바우처 · 숙소 예약 확인서</li>
+        <li>아기: 상비약 · 이유식 · 기저귀 · 아기띠 + 유모차</li>
+        <li>9월 오키나와 태풍 대비 → 여행자보험 · 항공 지연 대비 여유</li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="callout" style="background:var(--card-tint); border-color:var(--line-teal);">
+    <b style="color:var(--teal-deep);">🌡️ 9월 오키나와</b> — 여전히 덥고 습함(30도↑) + 태풍 시즌. 실내 명소(수족관)를 <b>비 오는 날 예비 코스</b>로 두면 유연합니다. 츄라우미 폐장 시간은 방문 주 <b>공식 홈페이지에서 최종 확인</b>.
+  </div>
+
+  <footer>
+    참고 자료 · <a href="https://www.terrace.co.jp/busena/faq/">브세나테라스 공식 FAQ (수유실·이유식)</a> ·
+    <a href="https://www.vill.onna.okinawa.jp/about/facility/1624949830/">만좌모 주변활성화시설 공식 (수유실 3실)</a> ·
+    <a href="https://okinawarist.com/482/">츄라우미 아기 동반 런치</a> ·
+    <a href="https://okinawa-labo.com/kid-friendly-restaurant-in-chatan-64564">차탄(아메리칸 빌리지) 아기 동반 식당</a> ·
+    <a href="https://travellifedesign.com/busena-terrace/">부세나 주변 맛집 랭킹</a>
+    <br>일정·거리·영업시간은 예약 및 방문 전 각 시설에 최종 확인하세요. · 작성 2026-08-26
+  </footer>
+
+</div>
+
+</body>
+</html>

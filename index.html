@@ -1332,9 +1332,12 @@
         if(!j||!j.daily)return;
         var d=j.daily,map={};
         d.time.forEach(function(t,i){map[t]=i;});
+        var horizon=new Date(); horizon.setDate(horizon.getDate()+13);
+        var horizonStr=horizon.toISOString().slice(0,10);
         groups[region].forEach(function(n){
-          var i=map[n.getAttribute('data-date')];
-          if(i==null){ n.innerHTML='<p class="wait">🗓️ 예보대기</p>'; return; }
+          var dt=n.getAttribute('data-date');
+          var i=map[dt];
+          if(i==null || dt>horizonStr){ n.innerHTML='<p class="wait">🗓️ 예보대기</p>'; return; }
           var em=wmo(d.weather_code[i]);
           var hi=Math.round(d.temperature_2m_max[i]);
           var lo=Math.round(d.temperature_2m_min[i]);
@@ -1364,11 +1367,14 @@
       if (!j || !j.daily) { st.textContent = '태풍 데이터를 불러오지 못했어요 (아래 링크로 확인)'; dot.className='ty-dot'; return; }
       var d = j.daily, map = {};
       d.time.forEach(function (t, i) { map[t] = i; });
+      // 신뢰구간: 오늘+13일까지만 신뢰(예보 맨 끝 경계일은 수치가 튀는 노이즈라 제외)
+      var horizon = new Date(); horizon.setDate(horizon.getDate() + 13);
+      var horizonStr = horizon.toISOString().slice(0,10);
       var maxGust = 0, anyData = false;
       var html = '';
       TRIP.forEach(function (t, k) {
         var i = map[t];
-        if (i == null) {
+        if (i == null || t > horizonStr) {
           html += '<div class="d"><div class="dd">D'+(k+1)+'·'+DOW[k]+'</div><div class="gg" style="color:var(--ink-faint)">–</div><div class="lbl">예보 대기</div></div>';
           return;
         }

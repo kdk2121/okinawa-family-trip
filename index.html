@@ -336,6 +336,8 @@
     color: var(--teal-deep); border: 1px solid var(--line-teal); vertical-align: 1px;
   }
   .checklist .when.now { background: var(--coral-soft); color: var(--coral); border-color: var(--coral); }
+  .when.done { background:#E4F4E8; color:#2E7D46; border-color:#A9D9B8; }
+  .checklist li.done > b { text-decoration:line-through; opacity:.72; }
   .callphone {
     font-family: "Zilla Slab", serif; font-weight: 600; color: var(--teal-deep);
     font-variant-numeric: tabular-nums;
@@ -784,7 +786,7 @@
             <ul style="margin:6px 0 0; padding-left:18px; line-height:1.7;">
               <li>🐋 <b>글라스보트</b>(고래모양·유리바닥) 약 20분 · 산호·열대어 관찰(유나도 시각 반응 좋음) · <b>4세 미만 무료</b> <span class="note">⚠️ 부잔교(뜨는 다리)로 승선 → 아기띠로 안고 · 파도·날씨로 결항 가능</span></li>
               <li>🔭 <b>해중전망탑</b>(수심 5m, 창 24개) <span class="note">⚠️ 나선계단 50칸·엘베 없음·유모차 진입 불가(입구에서 직원에게 맡김) → 아기띠 필수 · 유모차파엔 번거로움</span></li>
-              <li>🚌 원내 <b>무료 셔틀</b>로 전망탑·보트 승강장 이동 → 걷는 부담 ↓</li>
+              <li class="done">🚌 원내 <b>무료 셔틀</b>로 전망탑·보트 승강장 이동 → 걷는 부담 ↓</li>
             </ul>
             <div style="margin-top:10px; overflow-x:auto;">
               <table style="width:100%; border-collapse:collapse; font-size:12.5px; min-width:320px;">
@@ -1027,16 +1029,16 @@
 
   <!-- To-Do -->
   <h2 class="section-title" id="todo">✅ 예약 To-Do</h2>
-  <p class="section-sub">출발 전 처리할 것 — 되돌리기 어려운 것부터</p>
+  <p class="section-sub">🎉 주요 예약 모두 완료! · 남은 건 당일 확인 항목뿐</p>
   <div class="callout" style="background:var(--card-tint); border-color:var(--line-teal); margin-bottom:18px;">
     <b style="color:var(--teal-deep);">✅ 숙소 예약 완료</b> — <b>부세나테라스</b> Booking #6460629163 (PIN 9560), 오션프론트 3룸 + 엑스트라베드(요청완료), 조식 포함, 9/10~9/13 · <b>리가로얄 그란</b> Trip.com 3룸(PIN 3094·1319 등), 9/14 조식 포함, 9/13~9/14.
     <br><small>⚠️ 부세나 취소/노쇼 시 전액 위약금 · 리가로얄은 9/11 23:59 이후 환불 불가 → 일정 확정 상태.</small>
   </div>
   <ul class="checklist">
-    <li class="warn"><b>렌터카 카시트</b> <span class="when now">지금</span><br>코이코이 오키나와에 <b>0~1세용 카시트</b> 예약 요청 (일본 6세 미만 법적 의무).
+    <li class="done warn"><b>렌터카 카시트</b> <span class="when done">✅ 완료</span><br>코이코이 오키나와에 <b>0~1세용 카시트</b> 예약 요청 (일본 6세 미만 법적 의무).
       <span class="k">알파드 8인승 = 좌석 딱 맞음, 짐은 트렁크뿐 → 캐리어 많으면 짐 배송(야마토 手ぶら観光(데부라칸코), 1개 ¥1,000) 활용 고려.</span></li>
 
-    <li class="warn"><b>D2(금 9/11) 저녁 · 하나츠즈미(花つづみ)</b> <span class="when now">서둘러</span>
+    <li class="done warn"><b>D2(금 9/11) 저녁 · 하나츠즈미(花つづみ)</b> <span class="when done">✅ 완료</span>
       <span class="callphone">📞 0980-43-8388</span>
       <ul class="subcheck">
         <li>8명 + 아기 예약 (18:30 · 금요일이라 조기 예약)</li>
@@ -1045,7 +1047,7 @@
       </ul>
     </li>
 
-    <li class="warn"><b>D3(토 9/12) 저녁 · 치누만 나키마점</b> <span class="when now">서둘러</span>
+    <li class="done warn"><b>D3(토 9/12) 저녁 · 치누만 나키마점</b> <span class="when done">✅ 완료</span>
       <span class="callphone">📞 098-967-7551 (13:00~17:00)</span>
       <span class="k">토요일이라 경쟁 심함 · 전화 예약 추천(넷 예약 시 셔틀 불가)</span>
       <ul class="subcheck">
@@ -1056,7 +1058,7 @@
       </ul>
     </li>
 
-    <li><b>부세나테라스</b> <span class="when">체크인 전</span>
+    <li class="done"><b>부세나테라스</b> <span class="when done">✅ 완료</span>
       <ul class="subcheck">
         <li>베이비베드(아기 침대) 사전 요청</li>
         <li>이유식 상담 (이용 1주 전까지)</li>
@@ -1069,10 +1071,10 @@
     <li><b>D4(일 9/13) 저녁</b> <span class="when">현지 결정</span><br>마지막 밤 — 현지에서 컨디션 보고 후보 중 선택 (부치/파이카지/EL Patio/호텔).
       <span class="k">가고 싶은 곳이 정해지면 당일 낮에 전화 예약 (부치 098-943-6567 · 일요일이라 룸은 미리)</span></li>
 
-    <li class="warn"><b>목포삼촌 D4(9/13) 공항 이동</b> <span class="when now">중요</span><br>13:15 출발 → 공항 11:15 도착 목표 · 부세나에서 <b>택시 약 75분(09:30경 출발이면 여유)</b> / 버스면 90~150분이라 08시대 출발.
+    <li class="done warn"><b>목포삼촌 D4(9/13) 공항 이동</b> <span class="when done">✅ 완료</span><br>13:15 출발 → 공항 11:15 도착 목표 · 부세나에서 <b>택시 약 75분(09:30경 출발이면 여유)</b> / 버스면 90~150분이라 08시대 출발.
       <span class="k">호텔 하이어(0980-51-1333)가 가장 확실 · 버스면 오전 공항방향 배차 미리 확인</span></li>
 
-    <li class="warn"><b>유모차 도어투도어 신청</b> <span class="when now">출발 3시간 전까지</span><br>인천공항 위탁수하물을 집/호텔까지 배송해주는 서비스 (6세 미만 영유아 동반 대상).
+    <li class="done warn"><b>유모차 도어투도어 신청</b> <span class="when done">✅ 완료</span><br>인천공항 위탁수하물을 집/호텔까지 배송해주는 서비스 (6세 미만 영유아 동반 대상).
       <span class="k">굿럭(GoodLugg) 앱 or goodlugg.com에서 사전예약 · 유모차는 게이트까지 갖고 가서 탑승 직전 위탁(체크인/게이트 신청, 도착지까지 무료 운송)</span></li>
 
     <li><b>기타 준비물</b> <span class="when">출발 전</span>
